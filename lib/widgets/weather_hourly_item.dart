@@ -38,7 +38,7 @@ class WeatherHourlyItem extends StatelessWidget {
               ),
             ),
             Text('${(forecastList.pop * 100).round()}%'),
-            Text('${forecastList.main.temp}°F'),
+            Text('${forecastList.main.temp.round()}°'),
           ],
         ),
       ),

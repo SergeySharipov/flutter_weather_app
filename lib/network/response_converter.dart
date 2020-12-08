@@ -13,18 +13,12 @@ class ResponseConverter implements Converter {
   @override
   Response<BodyType> convertResponse<BodyType, InnerType>(Response response) {
     try {
-      print('-------convertResponse()----------');
       var jsonResponse = json.decode(response.body);
-      print('-------jsonResponse----------' + jsonResponse.toString());
       var convertedResponse;
       if (jsonResponse["cnt"] == null) {
-        print('-------WeatherData---------- start');
         convertedResponse = WeatherData.fromJson(jsonResponse);
-        print('-------WeatherData----------' + convertedResponse.toString());
       } else {
-        print('-------ForecastData---------- start');
         convertedResponse = ForecastData.fromJson(jsonResponse);
-        print('-------ForecastData----------' + convertedResponse.toString());
       }
       return response.copyWith<BodyType>(body: convertedResponse);
     } catch (e) {
