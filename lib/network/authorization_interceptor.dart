@@ -9,7 +9,8 @@ class AuthorizationInterceptor implements RequestInterceptor {
 
   @override
   FutureOr<Request> onRequest(Request request) async {
-    request.parameters.addAll({'lang': lang, 'appid': appId, 'units': units});
+    request.parameters.addAll(
+        {'lang': lang, 'appid': appId, 'units': units});
     return request;
   }
 }

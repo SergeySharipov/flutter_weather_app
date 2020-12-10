@@ -34,6 +34,7 @@ dependencies:
   logging: ^0.11.4
   geolocator: ^6.0.0+4
   cached_network_image: ^2.4.1
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:

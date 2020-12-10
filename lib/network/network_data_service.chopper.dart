@@ -25,10 +25,10 @@ class _$NetworkDataService extends NetworkDataService {
   }
 
   @override
-  Future<Response<ForecastData>> getForecast(double lat, double lon) {
-    final $url = 'data/2.5/forecast';
+  Future<Response<OneCallData>> getOneCall(double lat, double lon) {
+    final $url = 'data/2.5/onecall?exclude=current,minutely';
     final $params = <String, dynamic>{'lat': lat, 'lon': lon};
     final $request = Request('GET', $url, client.baseUrl, parameters: $params);
-    return client.send<ForecastData, ForecastData>($request);
+    return client.send<OneCallData, OneCallData>($request);
   }
 }

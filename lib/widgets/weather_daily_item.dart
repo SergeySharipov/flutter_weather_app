@@ -1,17 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_app/model/one_call/hourly.dart';
+import 'package:flutter_weather_app/model/one_call/daily.dart';
 import 'package:intl/intl.dart';
 
-class WeatherHourlyItem extends StatelessWidget {
-  final Hourly hourly;
+class WeatherDailyItem extends StatelessWidget {
+  final Daily daily;
 
-  WeatherHourlyItem({Key key, @required this.hourly}) : super(key: key);
+  WeatherDailyItem({Key key, @required this.daily}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var weather = hourly.weather.first;
-    var date = new DateTime.fromMillisecondsSinceEpoch(hourly.dt * 1000,
+
+    var date = new DateTime.fromMillisecondsSinceEpoch(daily.dt * 1000,
         isUtc: false);
     return Card(
       child: Padding(
@@ -19,7 +19,8 @@ class WeatherHourlyItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(new DateFormat('h a').format(date)),
+            Text(new DateFormat('E').format(date)),
+            /*
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Row(
@@ -37,8 +38,10 @@ class WeatherHourlyItem extends StatelessWidget {
                 ],
               ),
             ),
-            Text('${(hourly.pop * 100).round()}%'),
-            Text('${hourly.temp.round()}°'),
+            Text('${(forecastList.pop * 100).round()}%'),
+
+             */
+            Text('${daily.temp.min.round()}°/${daily.temp.max.round()}°'),
           ],
         ),
       ),

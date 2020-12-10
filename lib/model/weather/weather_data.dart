@@ -1,11 +1,11 @@
-import 'package:flutter_weather_app/model/common/clouds.dart';
-import 'package:flutter_weather_app/model/common/coord.dart';
-import 'package:flutter_weather_app/model/common/main_data.dart';
-import 'package:flutter_weather_app/model/common/weather.dart';
-import 'package:flutter_weather_app/model/common/wind.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../common/weather.dart';
+import 'clouds.dart';
+import 'coord.dart';
+import 'main_data.dart';
 import 'sys.dart';
+import 'wind.dart';
 
 part 'weather_data.g.dart';
 

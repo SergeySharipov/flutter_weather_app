@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_app/model/forecast/forecast_data.dart';
+import 'package:flutter_weather_app/model/one_call/one_call_data.dart';
 import 'package:flutter_weather_app/model/weather/weather_data.dart';
 import 'package:flutter_weather_app/network/network_data_service.dart';
 import 'package:flutter_weather_app/utils/geolocation_helper.dart';
+import 'package:flutter_weather_app/widgets/weather_daily_item.dart';
 import 'package:flutter_weather_app/widgets/weather_hourly_item.dart';
 import 'package:flutter_weather_app/widgets/weather_view.dart';
 import 'package:geolocator/geolocator.dart';
@@ -16,7 +17,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   bool isLoading = false;
   WeatherData weatherData;
-  ForecastData forecastData;
+  OneCallData oneCallData;
 
   @override
   void initState() {
@@ -36,15 +37,16 @@ class _HomeState extends State<Home> {
       var weatherResponse =
           await Provider.of<NetworkDataService>(context, listen: false)
               .getWeather(lat, lon);
-      var forecastResponse =
+      var oneCallResponse =
           await Provider.of<NetworkDataService>(context, listen: false)
-              .getForecast(lat, lon);
+              .getOneCall(lat, lon);
 
       if (weatherResponse.statusCode == 200 &&
-          forecastResponse.statusCode == 200) {
+          oneCallResponse.statusCode == 200) {
         return setState(() {
           weatherData = weatherResponse.body;
-          forecastData = forecastResponse.body;
+          oneCallData = oneCallResponse.body;
+          print("------------"+oneCallData.hourly.first.toJson().toString());
           isLoading = false;
         });
       }
@@ -88,12 +90,25 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 height: 110.0,
-                child: forecastData != null
+                child: oneCallData != null
                     ? ListView.builder(
-                        itemCount: forecastData.list.length,
+                        itemCount: 12,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) => WeatherHourlyItem(
-                            forecastList: forecastData.list[index]))
+                            hourly: oneCallData.hourly[index]))
+                    : Container(),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 110.0,
+                child: oneCallData != null
+                    ? ListView.builder(
+                    itemCount: oneCallData.daily.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) => WeatherDailyItem(
+                        daily: oneCallData.daily[index]))
                     : Container(),
               ),
             ),

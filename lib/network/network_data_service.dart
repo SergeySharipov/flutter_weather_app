@@ -1,5 +1,5 @@
 import 'package:chopper/chopper.dart';
-import 'package:flutter_weather_app/model/forecast/forecast_data.dart';
+import 'package:flutter_weather_app/model/one_call/one_call_data.dart';
 import 'package:flutter_weather_app/model/weather/weather_data.dart';
 import 'package:flutter_weather_app/network/authorization_interceptor.dart';
 import 'package:flutter_weather_app/network/response_converter.dart';
@@ -25,7 +25,7 @@ abstract class NetworkDataService extends ChopperService {
   Future<Response<WeatherData>> getWeather(
       @Query("lat") double lat, @Query("lon") double lon);
 
-  @Get(path: 'data/2.5/forecast')
-  Future<Response<ForecastData>> getForecast(
+  @Get(path: 'data/2.5/onecall?exclude=current,minutely')
+  Future<Response<OneCallData>> getOneCall(
       @Query("lat") double lat, @Query("lon") double lon);
 }
