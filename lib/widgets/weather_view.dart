@@ -30,7 +30,7 @@ class WeatherView extends StatelessWidget {
             new DateTime.fromMillisecondsSinceEpoch(weatherData.dt * 1000,
                 isUtc: false))),
         Text(
-          '${weatherData.main.temp.round()}°',
+          ' ${weatherData.main.temp.round()}°',
           style: TextStyle(fontSize: 60),
         ),
         Text(
