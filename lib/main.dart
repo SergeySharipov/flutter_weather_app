@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_weather_app/screens/home.dart';
+import 'package:flutter_weather_app/theme/theme.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +10,9 @@ import 'network/network_data_service.dart';
 
 void main() {
   _setupLogging();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.black,
+  ));
   runApp(WeatherApp());
 }
 
@@ -23,15 +29,12 @@ class WeatherApp extends StatelessWidget {
     return Provider(
         create: (_) => NetworkDataService.create(),
         dispose: (_, NetworkDataService service) => service.client.dispose(),
-        child: MaterialApp(
+        child: GetMaterialApp(
             title: 'WeatherApp',
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-              primaryColor: Colors.red,
-              primaryColorDark: Colors.red[800],
-              accentColor: Colors.red,
-            ),
+            theme: lightTheme(),
+            darkTheme: darkTheme(),
+            themeMode: ThemeMode.system,
             initialRoute: '/home',
             routes: {
               '/home': (context) => Home(),

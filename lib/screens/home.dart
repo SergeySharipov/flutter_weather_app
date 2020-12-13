@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
         return setState(() {
           weatherData = weatherResponse.body;
           oneCallData = oneCallResponse.body;
-          print("------------"+oneCallData.hourly.first.toJson().toString());
+          print("------------" + oneCallData.hourly.first.toJson().toString());
           isLoading = false;
         });
       }
@@ -60,8 +60,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: ListView(
           children: <Widget>[
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -79,37 +78,68 @@ class _HomeState extends State<Home> {
                           strokeWidth: 2.0,
                         )
                       : IconButton(
-                          icon: new Icon(Icons.refresh),
+                          icon: new Icon(
+                            Icons.refresh,
+                            color: Colors.white,
+                          ),
                           tooltip: 'Refresh',
                           onPressed: loadWeather,
                         ),
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 110.0,
-                child: oneCallData != null
-                    ? ListView.builder(
-                        itemCount: 12,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) => WeatherHourlyItem(
-                            hourly: oneCallData.hourly[index]))
-                    : Container(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(21,4,4,0),
+                  child: Text("Hourly"),
+                ),
+              ],
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 155.0,
+                  child: oneCallData != null
+                      ? ListView.builder(
+                          itemCount: 12,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => WeatherHourlyItem(
+                              hourly: oneCallData.hourly[index]))
+                      : Container(),
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 110.0,
-                child: oneCallData != null
-                    ? ListView.builder(
-                    itemCount: oneCallData.daily.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => WeatherDailyItem(
-                        daily: oneCallData.daily[index]))
-                    : Container(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(21,4,4,0),
+                  child: Text("Daily"),
+                ),
+              ],
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 155.0,
+                  child: oneCallData != null
+                      ? ListView.builder(
+                          itemCount: oneCallData.daily.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) =>
+                              WeatherDailyItem(daily: oneCallData.daily[index]))
+                      : Container(),
+                ),
               ),
             ),
           ],

@@ -19,7 +19,7 @@ class WeatherView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.location_on,
+                Icons.location_on,color: Colors.white,
               ),
               Text(weatherData.name,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),

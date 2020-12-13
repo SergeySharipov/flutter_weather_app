@@ -11,36 +11,40 @@ class WeatherHourlyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var weather = hourly.weather.first;
-    var date = new DateTime.fromMillisecondsSinceEpoch(hourly.dt * 1000,
-        isUtc: false);
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(new DateFormat('h a').format(date)),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CachedNetworkImage(
-                    imageUrl:
-                        'https://openweathermap.org/img/wn/${weather.icon}.png',
-                    height: 26,
-                  ),
-                  Text(
-                    weather.main,
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
+    var date =
+        new DateTime.fromMillisecondsSinceEpoch(hourly.dt * 1000, isUtc: false);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              new DateFormat('h a').format(date).toLowerCase(),
+              style: TextStyle(fontSize: 14),
             ),
-            Text('${(hourly.pop * 100).round()}%'),
-            Text('${hourly.temp.round()}°'),
-          ],
-        ),
+          ),
+          CachedNetworkImage(
+            imageUrl: 'https://openweathermap.org/img/wn/${weather.icon}.png',
+            height: 30,
+          ),
+          Text(weather.main),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              '💧${(hourly.pop * 100).round()}%',
+              style: TextStyle(fontSize: 12),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Text(
+              '${hourly.temp.round()}°',
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        ],
       ),
     );
   }
