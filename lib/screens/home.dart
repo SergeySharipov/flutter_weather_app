@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(21,4,4,0),
+                  padding: const EdgeInsets.fromLTRB(21, 4, 4, 0),
                   child: Text("Hourly"),
                 ),
               ],
@@ -114,7 +114,7 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(21,4,4,0),
+                  padding: const EdgeInsets.fromLTRB(21, 4, 4, 0),
                   child: Text("Daily"),
                 ),
               ],
@@ -141,18 +141,31 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(21,4,4,0),
+                  padding: const EdgeInsets.fromLTRB(21, 4, 4, 0),
                   child: Text("Details"),
                 ),
               ],
             ),
             Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: weatherData != null
+                  ? WeatherDetailsView(weatherData: weatherData)
+                  : Container(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: IconButton(
+                icon: new Icon(
+                  Icons.info_outline,
+                  color: Colors.white,
                 ),
-                child: weatherData != null
-                    ? WeatherDetailsView(weatherData: weatherData)
-                    : Container(),
+                tooltip: 'About',
+                onPressed: () {
+                  Navigator.pushNamed(context, '/about');
+                },
+              ),
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_weather_app/screens/home.dart';
+import 'package:flutter_weather_app/screens/about.dart';
 import 'package:flutter_weather_app/theme/theme.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:logging/logging.dart';
@@ -38,6 +39,7 @@ class WeatherApp extends StatelessWidget {
             initialRoute: '/home',
             routes: {
               '/home': (context) => Home(),
+              '/about': (context) => About(),
             }));
   }
 }
