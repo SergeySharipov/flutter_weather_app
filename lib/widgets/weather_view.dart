@@ -26,26 +26,14 @@ class WeatherView extends StatelessWidget {
             ],
           ),
         ),
-        Text(new DateFormat('E., MMMM d, h:mm a').format(
-            new DateTime.fromMillisecondsSinceEpoch(weatherData.dt * 1000,
-                isUtc: false))),
-        Text(
-          ' ${weatherData.main.temp.round()}°',
-          style: TextStyle(fontSize: 60),
-        ),
-        Text(
-          '${weatherData.main.tempMin.round()}°/${weatherData.main.tempMax.round()}° ' +
-              'Feels like ${weatherData.main.feelsLike.round()}°',
-          style: TextStyle(fontSize: 16),
-        ),
         Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(2.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CachedNetworkImage(
                 imageUrl:
-                    'https://openweathermap.org/img/wn/${weatherData.weather.first.icon}.png',
+                'https://openweathermap.org/img/wn/${weatherData.weather.first.icon}.png',
                 height: 30,
               ),
               Text(
@@ -54,6 +42,24 @@ class WeatherView extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        Text(
+          ' ${weatherData.main.temp.round()}°',
+          style: TextStyle(fontSize: 60),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            '${weatherData.main.tempMax.round()}°/${weatherData.main.tempMin.round()}° ' +
+                'Feels like ${weatherData.main.feelsLike.round()}°',
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text("Updated: "+ new DateFormat('E., MMM d, h:mm a').format(
+              new DateTime.fromMillisecondsSinceEpoch(weatherData.dt * 1000,
+                  isUtc: false))),
         ),
       ],
     );

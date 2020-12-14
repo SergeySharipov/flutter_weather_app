@@ -4,6 +4,7 @@ import 'package:flutter_weather_app/model/weather/weather_data.dart';
 import 'package:flutter_weather_app/network/network_data_service.dart';
 import 'package:flutter_weather_app/utils/geolocation_helper.dart';
 import 'package:flutter_weather_app/widgets/weather_daily_item.dart';
+import 'package:flutter_weather_app/widgets/weather_details_view.dart';
 import 'package:flutter_weather_app/widgets/weather_hourly_item.dart';
 import 'package:flutter_weather_app/widgets/weather_view.dart';
 import 'package:geolocator/geolocator.dart';
@@ -65,27 +66,21 @@ class _HomeState extends State<Home> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: weatherData != null
-                      ? WeatherView(weatherData: weatherData)
-                      : Container(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: isLoading
-                      ? CircularProgressIndicator(
-                          strokeWidth: 2.0,
-                        )
-                      : IconButton(
-                          icon: new Icon(
-                            Icons.refresh,
-                            color: Colors.white,
-                          ),
-                          tooltip: 'Refresh',
-                          onPressed: loadWeather,
+                weatherData != null
+                    ? WeatherView(weatherData: weatherData)
+                    : Container(),
+                isLoading
+                    ? CircularProgressIndicator(
+                        strokeWidth: 2.0,
+                      )
+                    : IconButton(
+                        icon: new Icon(
+                          Icons.refresh,
+                          color: Colors.white,
                         ),
-                ),
+                        tooltip: 'Refresh',
+                        onPressed: loadWeather,
+                      ),
               ],
             ),
             Row(
@@ -107,7 +102,7 @@ class _HomeState extends State<Home> {
                   height: 155.0,
                   child: oneCallData != null
                       ? ListView.builder(
-                          itemCount: 12,
+                          itemCount: 24,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) => WeatherHourlyItem(
                               hourly: oneCallData.hourly[index]))
@@ -141,6 +136,23 @@ class _HomeState extends State<Home> {
                       : Container(),
                 ),
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(21,4,4,0),
+                  child: Text("Details"),
+                ),
+              ],
+            ),
+            Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: weatherData != null
+                    ? WeatherDetailsView(weatherData: weatherData)
+                    : Container(),
             ),
           ],
         ),
