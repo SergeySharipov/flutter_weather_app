@@ -19,7 +19,8 @@ class WeatherView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.location_on,color: Colors.white,
+                Icons.location_on,
+                color: Colors.white,
               ),
               Text(weatherData.name,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
@@ -33,7 +34,7 @@ class WeatherView extends StatelessWidget {
             children: [
               CachedNetworkImage(
                 imageUrl:
-                'https://openweathermap.org/img/wn/${weatherData.weather.first.icon}.png',
+                    'https://openweathermap.org/img/wn/${weatherData.weather.first.icon}.png',
                 height: 30,
               ),
               Text(
@@ -56,10 +57,15 @@ class WeatherView extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: Text("Updated: "+ new DateFormat('E., MMM d, h:mm a').format(
-              new DateTime.fromMillisecondsSinceEpoch(weatherData.dt * 1000,
-                  isUtc: false))),
+          padding: const EdgeInsets.only(top: 12.0),
+          child: Text(
+            "Updated: " +
+                new DateFormat('E., MMM d, h:mm a').format(
+                    new DateTime.fromMillisecondsSinceEpoch(
+                        weatherData.dt * 1000,
+                        isUtc: false)),
+            style: TextStyle(fontSize: 12),
+          ),
         ),
       ],
     );

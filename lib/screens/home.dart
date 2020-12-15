@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_weather_app/model/one_call/one_call_data.dart';
 import 'package:flutter_weather_app/model/weather/weather_data.dart';
 import 'package:flutter_weather_app/network/network_data_service.dart';
@@ -47,7 +48,6 @@ class _HomeState extends State<Home> {
         return setState(() {
           weatherData = weatherResponse.body;
           oneCallData = oneCallResponse.body;
-          print("------------" + oneCallData.hourly.first.toJson().toString());
           isLoading = false;
         });
       }
@@ -69,18 +69,19 @@ class _HomeState extends State<Home> {
                 weatherData != null
                     ? WeatherView(weatherData: weatherData)
                     : Container(),
-                isLoading
-                    ? CircularProgressIndicator(
-                        strokeWidth: 2.0,
-                      )
-                    : IconButton(
-                        icon: new Icon(
-                          Icons.refresh,
-                          color: Colors.white,
+                SizedBox(
+                  height: 48,
+                  child: isLoading
+                      ? const SpinKitChasingDots(color: Colors.white, size: 25,)
+                      : IconButton(
+                          icon: new Icon(
+                            Icons.refresh,
+                            color: Colors.white,
+                          ),
+                          tooltip: 'Refresh',
+                          onPressed: loadWeather,
                         ),
-                        tooltip: 'Refresh',
-                        onPressed: loadWeather,
-                      ),
+                ),
               ],
             ),
             Row(

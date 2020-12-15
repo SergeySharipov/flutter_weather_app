@@ -19,7 +19,7 @@ class About extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(24.0),
-              child: Text("Weather App", style: TextStyle(fontSize: 30)),
+              child: Text("Flutter Weather App", style: TextStyle(fontSize: 30)),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -34,6 +34,10 @@ class About extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text("and data from openweathermap.org",
                   style: TextStyle(fontSize: 20)),
+            ),
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Version: 1.0",)
             ),
           ],
         ),
