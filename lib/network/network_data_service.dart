@@ -8,10 +8,10 @@ part 'network_data_service.chopper.dart';
 
 @ChopperApi()
 abstract class NetworkDataService extends ChopperService {
-  static NetworkDataService create() {
+  static NetworkDataService create(String lang) {
     final client = ChopperClient(
       baseUrl: 'https://api.openweathermap.org/',
-      interceptors: [AuthorizationInterceptor(), HttpLoggingInterceptor()],
+      interceptors: [AuthorizationInterceptor(lang), HttpLoggingInterceptor()],
       converter: ResponseConverter(),
       errorConverter: JsonConverter(),
       services: [

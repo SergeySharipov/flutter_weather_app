@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_weather_app/model/one_call/one_call_data.dart';
 import 'package:flutter_weather_app/model/weather/weather_data.dart';
 import 'package:flutter_weather_app/network/network_data_service.dart';
+import 'package:flutter_weather_app/utils/app_localizations_helper.dart';
 import 'package:flutter_weather_app/utils/geolocation_helper.dart';
 import 'package:flutter_weather_app/widgets/weather_daily_item.dart';
 import 'package:flutter_weather_app/widgets/weather_details_view.dart';
@@ -31,27 +32,33 @@ class _HomeState extends State<Home> {
     setState(() {
       isLoading = true;
     });
+
     Position position = await GeolocationHelper.getCurrentPosition();
-
-    if (position != null) {
-      final lat = position.latitude;
-      final lon = position.longitude;
-      var weatherResponse =
-          await Provider.of<NetworkDataService>(context, listen: false)
-              .getWeather(lat, lon);
-      var oneCallResponse =
-          await Provider.of<NetworkDataService>(context, listen: false)
-              .getOneCall(lat, lon);
-
-      if (weatherResponse.statusCode == 200 &&
-          oneCallResponse.statusCode == 200) {
-        return setState(() {
-          weatherData = weatherResponse.body;
-          oneCallData = oneCallResponse.body;
-          isLoading = false;
-        });
-      }
+    double lat, lon;
+    if (position == null) {
+      lat = 43.67;
+      lon = -79.33;
+    } else {
+      lat = position.latitude;
+      lon = position.longitude;
     }
+
+    var weatherResponse =
+        await Provider.of<NetworkDataService>(context, listen: false)
+            .getWeather(lat, lon);
+    var oneCallResponse =
+        await Provider.of<NetworkDataService>(context, listen: false)
+            .getOneCall(lat, lon);
+
+    if (weatherResponse.statusCode == 200 &&
+        oneCallResponse.statusCode == 200) {
+      return setState(() {
+        weatherData = weatherResponse.body;
+        oneCallData = oneCallResponse.body;
+        isLoading = false;
+      });
+    }
+
     setState(() {
       isLoading = false;
     });
@@ -72,13 +79,16 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: 48,
                   child: isLoading
-                      ? const SpinKitChasingDots(color: Colors.white, size: 25,)
+                      ? const SpinKitChasingDots(
+                          color: Colors.white,
+                          size: 25,
+                        )
                       : IconButton(
                           icon: new Icon(
                             Icons.refresh,
                             color: Colors.white,
                           ),
-                          tooltip: 'Refresh',
+                          tooltip: getTranslated(context, "refresh"),
                           onPressed: loadWeather,
                         ),
                 ),
@@ -89,7 +99,7 @@ class _HomeState extends State<Home> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(21, 4, 4, 0),
-                  child: Text("Hourly"),
+                  child: Text(getTranslated(context, "hourly")),
                 ),
               ],
             ),
@@ -116,7 +126,7 @@ class _HomeState extends State<Home> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(21, 4, 4, 0),
-                  child: Text("Daily"),
+                  child: Text(getTranslated(context, "daily")),
                 ),
               ],
             ),
@@ -143,7 +153,7 @@ class _HomeState extends State<Home> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(21, 4, 4, 0),
-                  child: Text("Details"),
+                  child: Text(getTranslated(context, "details")),
                 ),
               ],
             ),
@@ -162,7 +172,7 @@ class _HomeState extends State<Home> {
                   Icons.info_outline,
                   color: Colors.white,
                 ),
-                tooltip: 'About',
+                tooltip: getTranslated(context, "about"),
                 onPressed: () {
                   Navigator.pushNamed(context, '/about');
                 },

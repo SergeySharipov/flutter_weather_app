@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_app/model/one_call/daily.dart';
+import 'package:flutter_weather_app/utils/app_localizations.dart';
+import 'package:flutter_weather_app/utils/app_localizations_helper.dart';
 import 'package:intl/intl.dart';
 
 class WeatherDailyItem extends StatelessWidget {
@@ -14,7 +18,7 @@ class WeatherDailyItem extends StatelessWidget {
     var date =
         new DateTime.fromMillisecondsSinceEpoch(daily.dt * 1000, isUtc: false);
     var dateText =
-        dateNow.day == date.day ? "Today" : new DateFormat('E').format(date);
+        dateNow.day == date.day ? getTranslated(context, "today") : new DateFormat('E', Platform.localeName).format(date);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -33,7 +37,7 @@ class WeatherDailyItem extends StatelessWidget {
                 'https://openweathermap.org/img/wn/${daily.weather.first.icon}.png',
             height: 30,
           ),
-          Text(daily.weather.first.main),
+          Text(getTranslated(context, daily.weather.first.main.toLowerCase())),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(

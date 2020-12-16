@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_app/model/weather/weather_data.dart';
+import 'package:flutter_weather_app/utils/app_localizations_helper.dart';
 import 'package:flutter_weather_app/utils/degree_converter.dart';
 import 'package:intl/intl.dart';
 
@@ -48,25 +50,40 @@ class WeatherDetailsView extends StatelessWidget {
     return Table(
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: [
-        getTableRow("Sunrise", new DateFormat('h:mm a').format(sunrise)),
-        getTableRow("Sunset", new DateFormat('h:mm a').format(sunset)),
-        getTableRow("Description", weatherData.weather.first.description),
         getTableRow(
-            "Feels like", weatherData.main.feelsLike.round().toString() + '°'),
+            getTranslated(context, "sunrise"),
+            new DateFormat(getTranslated(context, "dateFormatHoursMinutes"), Platform.localeName)
+                .format(sunrise)),
         getTableRow(
-            "High / Low",
+            getTranslated(context, "sunset"),
+            new DateFormat(getTranslated(context, "dateFormatHoursMinutes"), Platform.localeName)
+                .format(sunset)),
+        getTableRow(getTranslated(context, "description"),
+            weatherData.weather.first.description),
+        getTableRow(getTranslated(context, "feelsLike"),
+            weatherData.main.feelsLike.round().toString() + '°'),
+        getTableRow(
+            getTranslated(context, "high") +
+                ' / ' +
+                getTranslated(context, "low"),
             weatherData.main.tempMax.round().toString() +
                 '°/ ' +
                 weatherData.main.tempMin.round().toString() +
                 '°'),
         getTableRow(
-            "Wind",
-            DegreeConverter.degreeToCardinalDirection(weatherData.wind.deg) +
+            getTranslated(context, "wind"),
+            DegreeConverter.degreeToCardinalDirection(context, weatherData.wind.deg) +
                 " " +
                 weatherData.wind.speed.round().toString() +
-                " km/h"),
-        getTableRow("Humidity", weatherData.main.humidity.toString() + '%'),
-        getTableRow("Pressure", weatherData.main.pressure.toString() + ' MB',
+                " " +
+                getTranslated(context, "kmHour")),
+        getTableRow(getTranslated(context, "humidity"),
+            weatherData.main.humidity.toString() + '%'),
+        getTableRow(
+            getTranslated(context, "pressure"),
+            weatherData.main.pressure.toString() +
+                ' ' +
+                getTranslated(context, "pressureUnit"),
             isLast: true),
       ],
     );

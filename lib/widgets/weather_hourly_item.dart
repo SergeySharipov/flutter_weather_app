@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_app/model/one_call/hourly.dart';
+import 'package:flutter_weather_app/utils/app_localizations.dart';
+import 'package:flutter_weather_app/utils/app_localizations_helper.dart';
 import 'package:intl/intl.dart';
 
 class WeatherHourlyItem extends StatelessWidget {
@@ -11,8 +13,6 @@ class WeatherHourlyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var weather = hourly.weather.first;
-    var date =
-        new DateTime.fromMillisecondsSinceEpoch(hourly.dt * 1000, isUtc: false);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -21,7 +21,7 @@ class WeatherHourlyItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              new DateFormat('h a').format(date).toLowerCase(),
+              getTranslatedDate(context,hourly.dt, "dateFormatHours").toLowerCase(),
               style: TextStyle(fontSize: 14),
             ),
           ),
@@ -29,7 +29,7 @@ class WeatherHourlyItem extends StatelessWidget {
             imageUrl: 'https://openweathermap.org/img/wn/${weather.icon}.png',
             height: 30,
           ),
-          Text(weather.main),
+          Text(getTranslated(context, weather.main.toLowerCase())),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(

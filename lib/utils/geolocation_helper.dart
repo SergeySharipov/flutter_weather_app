@@ -5,7 +5,8 @@ class GeolocationHelper {
     Position position;
     try {
       position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.low);
+              desiredAccuracy: LocationAccuracy.low)
+          .timeout(const Duration(seconds: 4));
     } catch (e) {
       print(e);
     }

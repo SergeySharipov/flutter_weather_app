@@ -1,7 +1,8 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_app/model/weather/weather_data.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_weather_app/utils/app_localizations_helper.dart';
 
 class WeatherView extends StatelessWidget {
   final WeatherData weatherData;
@@ -38,7 +39,7 @@ class WeatherView extends StatelessWidget {
                 height: 30,
               ),
               Text(
-                weatherData.weather.first.main,
+              getTranslated(context, weatherData.weather.first.main.toLowerCase()),
                 style: TextStyle(fontSize: 16),
               ),
             ],
@@ -52,18 +53,17 @@ class WeatherView extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             '${weatherData.main.tempMax.round()}°/${weatherData.main.tempMin.round()}° ' +
-                'Feels like ${weatherData.main.feelsLike.round()}°',
+                getTranslated(context, "feelsLike") +
+                ' ${weatherData.main.feelsLike.round()}°',
             style: TextStyle(fontSize: 16),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 12.0),
           child: Text(
-            "Updated: " +
-                new DateFormat('E., MMM d, h:mm a').format(
-                    new DateTime.fromMillisecondsSinceEpoch(
-                        weatherData.dt * 1000,
-                        isUtc: false)),
+            getTranslated(context, "updated") +
+                ": " +
+                getTranslatedCurrentDate(context),
             style: TextStyle(fontSize: 12),
           ),
         ),
