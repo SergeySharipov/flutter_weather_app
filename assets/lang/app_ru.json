@@ -5,6 +5,9 @@
   "details": "Подробности",
   "about": "О приложении",
 
+  "errorMsgLocation": "Пожалуйста, проверьте разрешение на местоположение.",
+  "errorMsgInternet": "Пожалуйста, проверьте интернет-соединение.",
+
   "directions": "С СВ В ЮВ Ю ЮЗ З СЗ",
   "dateFormatFull": "E., MMM d, HH:mm",
   "dateFormatHoursMinutes": "HH:mm",

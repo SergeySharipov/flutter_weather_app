@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_weather_app/model/weather/weather_data.dart';
@@ -6,8 +5,10 @@ import 'package:flutter_weather_app/utils/app_localizations_helper.dart';
 
 class WeatherView extends StatelessWidget {
   final WeatherData weatherData;
+  final DateTime lastUpdate;
 
-  WeatherView({Key key, @required this.weatherData}) : super(key: key);
+  WeatherView({Key key, @required this.weatherData, @required this.lastUpdate})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,8 @@ class WeatherView extends StatelessWidget {
                 height: 30,
               ),
               Text(
-              getTranslated(context, weatherData.weather.first.main.toLowerCase()),
+                getTranslated(
+                    context, weatherData.weather.first.main.toLowerCase()),
                 style: TextStyle(fontSize: 16),
               ),
             ],
@@ -63,7 +65,7 @@ class WeatherView extends StatelessWidget {
           child: Text(
             getTranslated(context, "updated") +
                 ": " +
-                getTranslatedCurrentDate(context),
+                getTranslatedDateFormatFull(context, lastUpdate),
             style: TextStyle(fontSize: 12),
           ),
         ),

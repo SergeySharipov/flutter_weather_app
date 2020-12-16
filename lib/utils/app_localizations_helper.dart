@@ -16,8 +16,8 @@ String getTranslatedDate(BuildContext context, int dt, String dateFormat) {
       .format(new DateTime.fromMillisecondsSinceEpoch(dt * 1000, isUtc: false));
 }
 
-String getTranslatedCurrentDate(BuildContext context) {
+String getTranslatedDateFormatFull(BuildContext context, DateTime dateTime) {
   return DateFormat(
       getTranslated(context, "dateFormatFull"), getLanguageCode(context))
-      .format(DateTime.now());
+      .format(dateTime);
 }

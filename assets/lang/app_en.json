@@ -5,6 +5,9 @@
   "details": "Details",
   "about": "About this app",
 
+  "errorMsgLocation": "Please, check location permission.",
+  "errorMsgInternet": "Please, check internet connection.",
+
   "directions": "N NE E SE S SW W NW",
   "dateFormatFull": "E., MMM d, h:mm a",
   "dateFormatHoursMinutes": "h:mm a",

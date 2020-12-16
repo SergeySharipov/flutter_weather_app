@@ -5,6 +5,9 @@
   "details": "Деталі",
   "about": "Про програму",
 
+  "errorMsgLocation": "Будь ласка, перевірте дозвіл на розташування.",
+  "errorMsgInternet": "Будь ласка, перевірте підключення до Інтернету.",
+
   "directions": "Пн. Пн.Сх. Сх. Пд.Сх. Пд. Пд.Зх. Зх. Пн.Зх.",
   "dateFormatFull": "E., MMM d, HH:mm",
   "dateFormatHoursMinutes": "HH:mm",

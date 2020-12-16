@@ -23,32 +23,44 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.1
-  chopper: ^3.0.2
-  http: ^0.12.2
-  provider: ^4.0.5
-  json_annotation: ^3.0.1
-  logging: ^0.11.4
-  geolocator: ^6.0.0+4
-  cached_network_image: ^2.4.1
-  intl: ^0.16.1
+  # Material app
   get: ^3.13.2
-  flutter_spinkit: ^4.1.2
+  # Log
+  logging: ^0.11.4
+  # About app
   package_info: ^0.4.3+2
+  # Network
+  provider: ^4.0.5
+  chopper: ^3.0.2
+  json_annotation: ^3.0.1
+  connectivity: ^2.0.2
+  # Location
+  geolocator: ^6.0.0+4
+  # Permissions
+  permission_handler: ^5.0.1+1
+  # Internationalization
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.16.1
+  # Widgets
+  cached_network_image: ^2.4.1
+  flutter_spinkit: ^4.1.2
+  fluttertoast: ^7.1.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  # Network
+  # Command Line: flutter pub run build_runner build --delete-conflicting-outputs
   build_runner: ^1.9.0
   chopper_generator: ^3.0.4
   json_serializable: ^3.3.0
-
+  # Generator of launcher icons
+  # Command Line: flutter pub run flutter_launcher_icons:main
   flutter_launcher_icons: ^0.8.0
 
 flutter_icons:

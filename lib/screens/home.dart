@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_weather_app/model/one_call/one_call_data.dart';
@@ -9,7 +10,9 @@ import 'package:flutter_weather_app/widgets/weather_daily_item.dart';
 import 'package:flutter_weather_app/widgets/weather_details_view.dart';
 import 'package:flutter_weather_app/widgets/weather_hourly_item.dart';
 import 'package:flutter_weather_app/widgets/weather_view.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -21,6 +24,7 @@ class _HomeState extends State<Home> {
   bool isLoading = false;
   WeatherData weatherData;
   OneCallData oneCallData;
+  DateTime lastUpdate;
 
   @override
   void initState() {
@@ -33,35 +37,68 @@ class _HomeState extends State<Home> {
       isLoading = true;
     });
 
-    Position position = await GeolocationHelper.getCurrentPosition();
-    double lat, lon;
-    if (position == null) {
-      lat = 43.67;
-      lon = -79.33;
+    Position position = await getCurrentLocation();
+
+    if (await isOnline()) {
+      var weatherResponse =
+          await Provider.of<NetworkDataService>(context, listen: false)
+              .getWeather(position.latitude, position.longitude)
+              .timeout(Duration(seconds: 5));
+      var oneCallResponse =
+          await Provider.of<NetworkDataService>(context, listen: false)
+              .getOneCall(position.latitude, position.longitude)
+              .timeout(Duration(seconds: 5));
+
+      if (weatherResponse.statusCode == 200 &&
+          oneCallResponse.statusCode == 200) {
+        return setState(() {
+          weatherData = weatherResponse.body;
+          oneCallData = oneCallResponse.body;
+          lastUpdate =  DateTime.now();
+          isLoading = false;
+        });
+      }
     } else {
-      lat = position.latitude;
-      lon = position.longitude;
-    }
-
-    var weatherResponse =
-        await Provider.of<NetworkDataService>(context, listen: false)
-            .getWeather(lat, lon);
-    var oneCallResponse =
-        await Provider.of<NetworkDataService>(context, listen: false)
-            .getOneCall(lat, lon);
-
-    if (weatherResponse.statusCode == 200 &&
-        oneCallResponse.statusCode == 200) {
-      return setState(() {
-        weatherData = weatherResponse.body;
-        oneCallData = oneCallResponse.body;
-        isLoading = false;
-      });
+      showErrorMsg(getTranslated(context, "errorMsgInternet"));
     }
 
     setState(() {
       isLoading = false;
     });
+  }
+
+  Future<Position> getCurrentLocation() async {
+    Position position;
+
+    if (await Permission.location.request().isGranted) {
+      position = await GeolocationHelper.getCurrentPosition();
+    }
+
+    if (position != null) {
+      return position;
+    } else {
+      showErrorMsg(getTranslated(context, "errorMsgLocation"));
+      position = new Position(longitude: 43.64, latitude: -79.39);
+      return position;
+    }
+  }
+
+  Future<bool> isOnline() async {
+    var connectivityResult = await (Connectivity().checkConnectivity())
+        .timeout(Duration(seconds: 5));
+    return (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi);
+  }
+
+  showErrorMsg(String msg) {
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        fontSize: 16.0);
   }
 
   @override
@@ -74,7 +111,7 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 weatherData != null
-                    ? WeatherView(weatherData: weatherData)
+                    ? WeatherView(weatherData: weatherData, lastUpdate: lastUpdate)
                     : Container(),
                 SizedBox(
                   height: 48,
